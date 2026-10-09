@@ -1,0 +1,29 @@
+<div class="shell">
+  <aside class="shell__brand">
+    <app-logo [inverse]="true" />
+
+    <div class="shell__pitch">
+      <h2>The modern project management platform</h2>
+      <p>Plan projects, track issues, collaborate with your team and deliver great work.</p>
+    </div>
+  </aside>
+
+  <main class="shell__main">
+    <div class="shell__card">
+      <app-logo class="shell__mobile-logo" />
+
+      <header class="shell__header">
+        <h1>{{ heading() }}</h1>
+        @if (subheading()) {
+          <p>{{ subheading() }}</p>
+        }
+      </header>
+
+      <ng-content />
+
+      <div class="shell__footer">
+        <ng-content select="[footer]" />
+      </div>
+    </div>
+  </main>
+</div>

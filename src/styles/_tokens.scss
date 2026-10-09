@@ -1,0 +1,110 @@
+// Design tokens. Values were sampled from the approved UI/UX showcase.
+// Components must use these custom properties instead of hard-coded values.
+:root {
+  // Brand
+  --color-primary-50: #eef5ff;
+  --color-primary-100: #d9e8ff;
+  --color-primary-200: #b9d4ff;
+  --color-primary-300: #8bb6ff;
+  --color-primary-400: #5592fb;
+  --color-primary-500: #2f77f6;
+  --color-primary-600: #1664f1;
+  --color-primary-700: #0f50cc;
+  --color-primary-800: #123fa0;
+  --color-primary-900: #14377f;
+
+  // Neutrals
+  --color-white: #ffffff;
+  --color-neutral-25: #fafbfe;
+  --color-neutral-50: #f7f8fc;
+  --color-neutral-100: #f1f4fa;
+  --color-neutral-200: #e4e8f0;
+  --color-neutral-300: #d3d9e4;
+  --color-neutral-400: #a3acbf;
+  --color-neutral-500: #6b7489;
+  --color-neutral-600: #4b5468;
+  --color-neutral-700: #343c4f;
+  --color-neutral-800: #1e2638;
+  --color-neutral-900: #0b1530;
+
+  // Navy (sidebar)
+  --color-navy-900: #0c1a30;
+  --color-navy-800: #10213c;
+  --color-navy-700: #1a2f52;
+  --color-navy-600: #24406d;
+
+  // Status
+  --color-success-50: #e8f7ec;
+  --color-success-600: #1f9d3a;
+  --color-warning-50: #fff4e0;
+  --color-warning-600: #c9780a;
+  --color-danger-50: #fdecee;
+  --color-danger-200: #f9b9c1;
+  --color-danger-500: #ee4e50;
+  --color-danger-600: #dc2638;
+  --color-danger-700: #b91c2c;
+
+  // Semantic aliases
+  --bg-app: var(--color-neutral-50);
+  --bg-auth: var(--color-neutral-100);
+  --bg-surface: var(--color-white);
+  --bg-sidebar: var(--color-navy-800);
+  --sidebar-active: #1d4fd7;
+  --text-strong: var(--color-neutral-900);
+  --text-default: var(--color-neutral-700);
+  --text-muted: var(--color-neutral-500);
+  --text-placeholder: var(--color-neutral-400);
+  --text-on-primary: var(--color-white);
+  --border-default: var(--color-neutral-200);
+  --border-strong: var(--color-neutral-300);
+  --link: var(--color-primary-600);
+  --focus-ring: 0 0 0 3px rgb(22 100 241 / 0.25);
+  --focus-ring-danger: 0 0 0 3px rgb(220 38 56 / 0.2);
+
+  // Typography
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+
+  // Spacing (4px base)
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  // Shape and elevation
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(16 33 60 / 0.06);
+  --shadow-md: 0 4px 12px rgb(16 33 60 / 0.08);
+  --shadow-card: 0 1px 3px rgb(16 33 60 / 0.06), 0 8px 24px rgb(16 33 60 / 0.05);
+
+  // Motion
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  // Control sizing
+  --control-height-sm: 2rem;
+  --control-height-md: 2.5rem;
+  --control-height-lg: 2.75rem;
+}

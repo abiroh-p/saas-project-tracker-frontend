@@ -1,0 +1,49 @@
+<app-auth-shell
+  heading="Create your account"
+  subheading="Start planning projects and tracking issues with your team."
+>
+  @if (errorMessage(); as message) {
+    <app-alert variant="error">{{ message }}</app-alert>
+  }
+
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <app-text-field
+      label="Full name"
+      icon="user"
+      placeholder="Jane Doe"
+      autocomplete="name"
+      formControlName="full_name"
+    />
+    <app-text-field
+      label="Email address"
+      type="email"
+      icon="mail"
+      placeholder="you@company.com"
+      autocomplete="email"
+      formControlName="email"
+    />
+    <app-text-field
+      label="Password"
+      type="password"
+      icon="lock"
+      placeholder="Create a password"
+      hint="At least 8 characters."
+      autocomplete="new-password"
+      formControlName="password"
+    />
+    <app-text-field
+      label="Confirm password"
+      type="password"
+      icon="lock"
+      placeholder="Repeat your password"
+      autocomplete="new-password"
+      formControlName="password_confirm"
+    />
+
+    <button app-button type="submit" size="lg" [block]="true" [loading]="submitting()">
+      {{ submitting() ? 'Creating account…' : 'Create account' }}
+    </button>
+  </form>
+
+  <p footer>Already have an account? <a routerLink="/sign-in">Sign in</a></p>
+</app-auth-shell>

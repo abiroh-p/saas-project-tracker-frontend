@@ -1,0 +1,46 @@
+<div class="field" [class.field--invalid]="errorMessage()" [class.field--disabled]="disabled()">
+  <label class="field__label" [for]="id">{{ label() }}</label>
+
+  <div class="field__control">
+    @if (icon(); as iconName) {
+      <app-icon class="field__icon" [name]="iconName" [size]="18" />
+    }
+
+    <input
+      class="field__input"
+      [class.field__input--with-icon]="icon()"
+      [class.field__input--with-toggle]="type() === 'password'"
+      [id]="id"
+      [attr.type]="effectiveType()"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [attr.autocomplete]="autocomplete()"
+      [disabled]="disabled()"
+      [attr.aria-invalid]="errorMessage() ? true : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="handleInput($event)"
+      (blur)="handleBlur()"
+    />
+
+    @if (type() === 'password') {
+      <button
+        type="button"
+        class="field__toggle"
+        [attr.aria-label]="revealed() ? 'Hide password' : 'Show password'"
+        [attr.aria-pressed]="revealed()"
+        [disabled]="disabled()"
+        (click)="toggleReveal()"
+      >
+        <app-icon [name]="revealed() ? 'eye-off' : 'eye'" [size]="18" />
+      </button>
+    }
+  </div>
+
+  @if (errorMessage(); as message) {
+    <p class="field__message field__message--error" [id]="id + '-error'" role="alert">
+      {{ message }}
+    </p>
+  } @else if (hint(); as hintText) {
+    <p class="field__message" [id]="id + '-hint'">{{ hintText }}</p>
+  }
+</div>

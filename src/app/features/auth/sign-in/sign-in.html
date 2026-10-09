@@ -1,0 +1,32 @@
+<app-auth-shell heading="Welcome back" subheading="Sign in to your account to continue.">
+  @if (errorMessage(); as message) {
+    <app-alert variant="error">{{ message }}</app-alert>
+  } @else if (notice(); as notice) {
+    <app-alert [variant]="notice.variant">{{ notice.text }}</app-alert>
+  }
+
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <app-text-field
+      label="Email or username"
+      icon="user"
+      placeholder="you@company.com"
+      autocomplete="username"
+      formControlName="identifier"
+    />
+    <app-text-field
+      label="Password"
+      type="password"
+      icon="lock"
+      placeholder="Your password"
+      autocomplete="current-password"
+      formControlName="password"
+    />
+    <app-checkbox formControlName="remember">Remember me</app-checkbox>
+
+    <button app-button type="submit" size="lg" [block]="true" [loading]="submitting()">
+      {{ submitting() ? 'Signing in…' : 'Sign in' }}
+    </button>
+  </form>
+
+  <p footer>Don't have an account? <a routerLink="/sign-up">Sign up</a></p>
+</app-auth-shell>

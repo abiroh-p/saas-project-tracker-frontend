@@ -1,0 +1,117 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--control-height-md);
+  padding: 0 var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+
+:host(:hover) {
+  text-decoration: none;
+}
+
+:host(:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+:host(.btn--sm) {
+  height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+:host(.btn--lg) {
+  height: var(--control-height-lg);
+  padding: 0 var(--space-6);
+  font-size: var(--text-md);
+}
+
+:host(.btn--block) {
+  display: flex;
+  width: 100%;
+}
+
+:host(.btn--primary) {
+  background: var(--color-primary-600);
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+:host(.btn--primary:hover) {
+  background: var(--color-primary-700);
+}
+:host(.btn--primary:active) {
+  background: var(--color-primary-800);
+}
+
+:host(.btn--secondary) {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+:host(.btn--secondary:hover) {
+  background: var(--color-primary-100);
+}
+
+:host(.btn--ghost) {
+  background: transparent;
+  color: var(--text-default);
+}
+:host(.btn--ghost:hover) {
+  background: var(--color-neutral-100);
+}
+
+:host(.btn--danger-outline) {
+  background: var(--color-white);
+  border-color: var(--color-danger-500);
+  color: var(--color-danger-600);
+}
+:host(.btn--danger-outline:hover) {
+  background: var(--color-danger-50);
+}
+:host(.btn--danger-outline:focus-visible) {
+  box-shadow: var(--focus-ring-danger);
+}
+
+:host(:disabled),
+:host([aria-disabled='true']) {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+:host(.is-loading) {
+  pointer-events: none;
+  cursor: progress;
+}
+
+.btn__spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

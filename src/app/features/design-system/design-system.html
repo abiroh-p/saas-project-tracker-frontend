@@ -1,0 +1,133 @@
+<main class="ds">
+  <header class="ds__header">
+    <app-logo />
+    <p class="ds__lead">Design system reference. Development only.</p>
+  </header>
+
+  <section class="ds__section">
+    <h2>Colour</h2>
+    @for (palette of palettes; track palette.title) {
+      <h3>{{ palette.title }}</h3>
+      <div class="ds__swatches">
+        @for (swatch of palette.swatches; track swatch.name) {
+          <div class="ds__swatch">
+            <span class="ds__chip" [style.background]="'var(' + swatch.token + ')'"></span>
+            <span class="ds__swatch-name">{{ swatch.name }}</span>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <section class="ds__section">
+    <h2>Typography</h2>
+    <div class="ds__stack">
+      <p
+        class="ds__type"
+        style="font-size: var(--text-4xl); font-weight: 700; color: var(--text-strong)"
+      >
+        The modern project management platform
+      </p>
+      <p
+        class="ds__type"
+        style="font-size: var(--text-3xl); font-weight: 700; color: var(--text-strong)"
+      >
+        Dashboard
+      </p>
+      <p
+        class="ds__type"
+        style="font-size: var(--text-xl); font-weight: 600; color: var(--text-strong)"
+      >
+        Recent projects
+      </p>
+      <p class="ds__type" style="font-size: var(--text-base)">
+        Body text. Plan projects, track issues, collaborate with your team and deliver great work.
+      </p>
+      <p class="ds__type" style="font-size: var(--text-sm); color: var(--text-muted)">
+        Secondary text. Manage your account information.
+      </p>
+    </div>
+  </section>
+
+  <section class="ds__section">
+    <h2>Buttons</h2>
+    <div class="ds__row">
+      <button app-button type="button">Get started</button>
+      <button app-button type="button" variant="secondary">View demo</button>
+      <button app-button type="button" variant="ghost">Sign in</button>
+      <button app-button type="button" variant="danger-outline">Deactivate Account</button>
+      <button app-button type="button" disabled>Disabled</button>
+    </div>
+    <div class="ds__row">
+      <button app-button type="button" size="sm">Small</button>
+      <button app-button type="button">Medium</button>
+      <button app-button type="button" size="lg">Large</button>
+      <button app-button type="button" [loading]="loading()" (click)="simulateLoading()">
+        {{ loading() ? 'Saving…' : 'Click to load' }}
+      </button>
+    </div>
+    <div class="ds__narrow">
+      <button app-button type="button" size="lg" [block]="true">Sign in (full width)</button>
+    </div>
+  </section>
+
+  <section class="ds__section">
+    <h2>Form controls</h2>
+    <div class="ds__grid">
+      <form
+        class="ds__card ds__stack"
+        [formGroup]="demoForm"
+        (ngSubmit)="demoForm.markAllAsTouched()"
+      >
+        <h3>Interactive</h3>
+        <app-text-field
+          label="Email address"
+          type="email"
+          icon="mail"
+          placeholder="you@company.com"
+          autocomplete="email"
+          formControlName="email"
+        />
+        <app-text-field
+          label="Password"
+          type="password"
+          icon="lock"
+          placeholder="Your password"
+          hint="At least 8 characters."
+          autocomplete="current-password"
+          formControlName="password"
+        />
+        <app-checkbox formControlName="remember">Remember me</app-checkbox>
+        <button app-button type="submit" [block]="true">Validate</button>
+      </form>
+
+      <div class="ds__card ds__stack" [formGroup]="invalidForm">
+        <h3>States</h3>
+        <app-text-field label="Email address" type="email" icon="mail" formControlName="email" />
+        <app-text-field label="Disabled" formControlName="disabled" />
+      </div>
+    </div>
+  </section>
+
+  <section class="ds__section">
+    <h2>Alerts</h2>
+    <div class="ds__stack ds__narrow">
+      <app-alert variant="error">Invalid username or password.</app-alert>
+      <app-alert variant="success">Your account has been created. Please sign in.</app-alert>
+      <app-alert variant="info">Your session will expire in 5 minutes.</app-alert>
+      <app-alert variant="warning">This project is archived and read-only.</app-alert>
+    </div>
+  </section>
+
+  <section class="ds__section">
+    <h2>Icons</h2>
+    <div class="ds__icons">
+      @for (name of iconNames; track name) {
+        <div class="ds__icon">
+          <app-icon [name]="name" [size]="22" />
+          <span>{{ name }}</span>
+        </div>
+      }
+    </div>
+  </section>
+</main>
