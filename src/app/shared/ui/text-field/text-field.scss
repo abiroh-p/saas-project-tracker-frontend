@@ -1,0 +1,110 @@
+:host {
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-strong);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field__icon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--text-placeholder);
+  pointer-events: none;
+}
+
+.field__input {
+  width: 100%;
+  height: var(--control-height-lg);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-strong);
+  font-size: var(--text-base);
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+
+  &::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-neutral-400);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: var(--focus-ring);
+  }
+
+  &:disabled {
+    background: var(--color-neutral-100);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+}
+
+.field__input--with-icon {
+  padding-left: calc(var(--space-3) + 18px + var(--space-2));
+}
+
+.field__input--with-toggle {
+  padding-right: calc(var(--space-3) + 18px + var(--space-3));
+}
+
+.field--invalid .field__input {
+  border-color: var(--color-danger-500);
+
+  &:focus {
+    box-shadow: var(--focus-ring-danger);
+  }
+}
+
+.field__toggle {
+  position: absolute;
+  right: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+
+  &:hover:not(:disabled) {
+    color: var(--text-strong);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+.field__message {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.field__message--error {
+  color: var(--color-danger-600);
+}
