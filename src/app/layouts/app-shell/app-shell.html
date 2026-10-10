@@ -1,0 +1,70 @@
+<a class="skip-link" href="#main" (click)="skipToContent($event, main)">Skip to content</a>
+
+<div class="shell" [class.shell--nav-open]="navOpen()">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <app-logo [inverse]="true" />
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Primary">
+      <ul class="nav-list">
+        @for (item of mainNav; track item.path) {
+          <li>
+            <a
+              class="nav-link"
+              [routerLink]="item.path"
+              routerLinkActive="is-active"
+              ariaCurrentWhenActive="page"
+            >
+              <app-icon [name]="item.icon" [size]="18" />
+              <span>{{ item.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+
+      <p class="sidebar__heading" id="settings-heading">Settings</p>
+      <ul class="nav-list" aria-labelledby="settings-heading">
+        @for (item of settingsNav; track item.path) {
+          <li>
+            <a
+              class="nav-link"
+              [routerLink]="item.path"
+              routerLinkActive="is-active"
+              ariaCurrentWhenActive="page"
+            >
+              <app-icon [name]="item.icon" [size]="18" />
+              <span>{{ item.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="shell__backdrop" aria-hidden="true" (click)="closeNav()"></div>
+
+  <div class="shell__body">
+    <header class="topbar">
+      <button
+        type="button"
+        class="topbar__menu"
+        aria-controls="sidebar"
+        [attr.aria-expanded]="navOpen()"
+        (click)="toggleNav()"
+      >
+        <app-icon name="menu" [size]="22" />
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <app-logo class="topbar__logo" [compact]="true" />
+
+      <div class="topbar__spacer"></div>
+
+      <app-user-menu />
+    </header>
+
+    <main class="shell__content" id="main" tabindex="-1" #main>
+      <router-outlet />
+    </main>
+  </div>
+</div>

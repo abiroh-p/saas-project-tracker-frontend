@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+.user-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-strong);
+  font-weight: 500;
+  transition: background-color var(--duration-fast) var(--ease);
+
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--color-neutral-100);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+.user-button__name {
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 40rem) {
+  .user-button__name {
+    display: none;
+  }
+}
+
+// The panel is rendered in the CDK overlay, but its template is declared in this component, so it
+// still receives this component's encapsulated styles.
+.menu {
+  min-width: 14rem;
+  padding: var(--space-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.menu__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: var(--space-1);
+
+  strong {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+
+  span {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    overflow-wrap: anywhere;
+  }
+}
+
+.menu__item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-default);
+  font-size: var(--text-base);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    outline: none;
+    background: var(--color-neutral-100);
+    color: var(--text-strong);
+    text-decoration: none;
+  }
+}
+
+.menu__divider {
+  height: 1px;
+  margin: var(--space-1) 0;
+  background: var(--border-default);
+}

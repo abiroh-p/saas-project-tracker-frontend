@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Alert } from '../../shared/ui/alert/alert';
+import { Avatar } from '../../shared/ui/avatar/avatar';
 import { Button } from '../../shared/ui/button/button';
 import { Checkbox } from '../../shared/ui/checkbox/checkbox';
 import { Icon } from '../../shared/ui/icon/icon';
@@ -19,7 +20,7 @@ const swatches = (prefix: string, steps: number[]): Swatch[] =>
 /** Development-only reference page for design tokens and shared components. */
 @Component({
   selector: 'app-design-system',
-  imports: [ReactiveFormsModule, Alert, Button, Checkbox, Icon, Logo, TextField],
+  imports: [ReactiveFormsModule, Alert, Avatar, Button, Checkbox, Icon, Logo, TextField],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './design-system.html',
   styleUrl: './design-system.scss',

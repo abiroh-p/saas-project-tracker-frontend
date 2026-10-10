@@ -1,0 +1,45 @@
+<app-page-header
+  heading="Change Password"
+  subtitle="Update your password to keep your account secure."
+/>
+
+<app-card class="account">
+  <form class="account__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    @if (saved()) {
+      <app-alert variant="success">Your password has been updated.</app-alert>
+    }
+    @if (errorMessage(); as message) {
+      <app-alert variant="error">{{ message }}</app-alert>
+    }
+
+    <app-text-field
+      label="Current password"
+      type="password"
+      icon="lock"
+      placeholder="Enter current password"
+      autocomplete="current-password"
+      formControlName="current_password"
+    />
+    <app-text-field
+      label="New password"
+      type="password"
+      icon="lock"
+      placeholder="Enter new password"
+      hint="Use at least 8 characters."
+      autocomplete="new-password"
+      formControlName="new_password"
+    />
+    <app-text-field
+      label="Confirm new password"
+      type="password"
+      icon="lock"
+      placeholder="Confirm new password"
+      autocomplete="new-password"
+      formControlName="new_password_confirm"
+    />
+
+    <button app-button type="submit" size="lg" [block]="true" [loading]="submitting()">
+      Update password
+    </button>
+  </form>
+</app-card>
