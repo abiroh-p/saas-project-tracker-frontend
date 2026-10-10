@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.account {
+  max-width: 36rem;
+}
+
+.account__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}

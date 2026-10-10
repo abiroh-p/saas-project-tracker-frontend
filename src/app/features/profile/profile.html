@@ -1,0 +1,45 @@
+<app-page-header heading="Profile Settings" subtitle="Manage your account information." />
+
+<app-card class="profile">
+  <div class="profile__identity">
+    <app-avatar [name]="session.displayName()" [size]="80" />
+    <div>
+      <p class="profile__name">{{ session.displayName() }}</p>
+      <p class="profile__role">{{ roleLabel() }}</p>
+    </div>
+  </div>
+
+  <form class="profile__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    @if (saved()) {
+      <app-alert variant="success">Your profile has been updated.</app-alert>
+    }
+    @if (errorMessage(); as message) {
+      <app-alert variant="error">{{ message }}</app-alert>
+    }
+
+    <app-text-field label="Full name" icon="user" autocomplete="name" formControlName="full_name" />
+    <app-text-field
+      label="Email address"
+      type="email"
+      icon="mail"
+      autocomplete="email"
+      formControlName="email"
+    />
+    <app-text-field
+      label="Username"
+      hint="Generated from your email. You can also sign in with it."
+      formControlName="username"
+    />
+
+    <button
+      app-button
+      type="submit"
+      size="lg"
+      [block]="true"
+      [loading]="submitting()"
+      [disabled]="form.pristine"
+    >
+      Save changes
+    </button>
+  </form>
+</app-card>

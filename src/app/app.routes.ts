@@ -27,11 +27,53 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/sign-up/sign-up').then((m) => m.SignUp),
   },
   {
-    path: 'dashboard',
-    title: 'Dashboard · ProjectTracker',
+    // Everything below needs a signed-in user and renders inside the app shell.
+    path: '',
     canActivate: [authGuard],
-    loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () => import('./layouts/app-shell/app-shell').then((m) => m.AppShell),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        title: 'Dashboard · ProjectTracker',
+        data: {
+          heading: 'Dashboard',
+          description: 'Your projects and issues at a glance will appear here soon.',
+        },
+        loadComponent: () =>
+          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+      },
+      {
+        path: 'projects',
+        title: 'Projects · ProjectTracker',
+        data: { heading: 'Projects', description: 'Project management is coming next.' },
+        loadComponent: () =>
+          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+      },
+      {
+        path: 'issues',
+        title: 'Issues · ProjectTracker',
+        data: { heading: 'Issues', description: 'Issue tracking is coming soon.' },
+        loadComponent: () =>
+          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+      },
+      {
+        path: 'settings',
+        children: [
+          { path: '', pathMatch: 'full', redirectTo: 'profile' },
+          {
+            path: 'profile',
+            title: 'Profile settings · ProjectTracker',
+            loadComponent: () => import('./features/profile/profile').then((m) => m.Profile),
+          },
+          {
+            path: 'account',
+            title: 'Change password · ProjectTracker',
+            loadComponent: () => import('./features/account/account').then((m) => m.Account),
+          },
+        ],
+      },
+    ],
   },
-  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: '' },
 ];

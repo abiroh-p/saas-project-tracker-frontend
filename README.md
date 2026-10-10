@@ -41,8 +41,10 @@ src/
       http/              error normalisation (ApiError) and its interceptor
       forms/             validation messages, server-error mapping, validators
       config/            API_BASE_URL injection token
-    shared/ui/           reusable presentational components (button, text-field, checkbox, alert, icon, logo)
-    features/            one folder per product area, lazy loaded (auth, dashboard, projects, issues, profile)
+    layouts/             page frames: app-shell (sidebar, top bar, account menu) for signed-in pages
+    shared/ui/           reusable presentational components (button, text-field, checkbox, alert, icon, logo,
+                         avatar, card, page-header)
+    features/            one folder per product area, lazy loaded (auth, profile, account, placeholder, ...)
 ```
 
 Rules of thumb:
@@ -51,6 +53,20 @@ Rules of thumb:
 - Styling uses tokens only (`var(--color-primary-600)`, `var(--space-4)`), never raw hex values.
 - Components are standalone, `OnPush`, use `input()` / `output()` / signals and the new control flow.
 - Anything that talks to the API lives in a service under the feature (or `core`), never in a component.
+
+## Routes
+
+| Path                                 | Page                                                       | Access                     |
+| ------------------------------------ | ---------------------------------------------------------- | -------------------------- |
+| `/sign-in`, `/sign-up`               | Auth pages                                                 | guests only (`guestGuard`) |
+| `/dashboard`, `/projects`, `/issues` | Placeholders until those features ship                     | signed in                  |
+| `/settings/profile`                  | Profile settings (full name, email; username is read-only) | signed in                  |
+| `/settings/account`                  | Change password                                            | signed in                  |
+| `/design-system`                     | Style guide                                                | development only           |
+
+All signed-in routes render inside `AppShell`. To add a page, add a child route under the shell in
+`app.routes.ts` and, if it belongs in the sidebar, an entry in `layouts/app-shell/nav-items.ts`.
+Below 1024px the sidebar becomes a drawer opened from the top bar.
 
 ## Authentication flow
 

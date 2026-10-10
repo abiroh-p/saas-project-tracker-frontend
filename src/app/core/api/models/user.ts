@@ -9,3 +9,15 @@ export interface User {
   full_name: string;
   role: UserRole;
 }
+
+export const USER_ROLE_LABELS: Record<UserRole, string> = {
+  ADMIN: 'Administrator',
+  PROJECT_MANAGER: 'Project Manager',
+  TEAM_MEMBER: 'Team Member',
+};
+
+/** Fields the signed-in user may change on their own profile. */
+export interface ProfileUpdate {
+  full_name?: string;
+  email?: string;
+}
