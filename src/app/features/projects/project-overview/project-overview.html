@@ -1,0 +1,46 @@
+@if (project(); as p) {
+  <div class="layout">
+    <app-card>
+      <h2>About</h2>
+      @if (p.description) {
+        <p class="description">{{ p.description }}</p>
+      } @else {
+        <p class="empty">No description yet.</p>
+      }
+    </app-card>
+
+    <app-card>
+      <h2>Details</h2>
+      <dl class="details">
+        <div>
+          <dt>Key</dt>
+          <dd>{{ p.key }}</dd>
+        </div>
+        <div>
+          <dt>Start date</dt>
+          <dd>{{ p.start_date ? (p.start_date | date: 'mediumDate') : 'Not set' }}</dd>
+        </div>
+        <div>
+          <dt>End date</dt>
+          <dd>{{ p.end_date ? (p.end_date | date: 'mediumDate') : 'Not set' }}</dd>
+        </div>
+        <div>
+          <dt>Created by</dt>
+          <dd>{{ p.created_by }}</dd>
+        </div>
+        <div>
+          <dt>Created</dt>
+          <dd>{{ p.created_at | date: 'medium' }}</dd>
+        </div>
+        <div>
+          <dt>Last updated</dt>
+          <dd>{{ p.updated_at | date: 'medium' }}</dd>
+        </div>
+        <div>
+          <dt>Your role</dt>
+          <dd>{{ roleLabel() }}</dd>
+        </div>
+      </dl>
+    </app-card>
+  </div>
+}

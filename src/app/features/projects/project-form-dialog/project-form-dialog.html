@@ -1,0 +1,43 @@
+<app-modal [heading]="editing ? 'Edit project' : 'New project'" (closed)="ref.close()">
+  <form id="project-form" class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    @if (errorMessage(); as message) {
+      <app-alert variant="error">{{ message }}</app-alert>
+    }
+
+    <app-text-field
+      label="Project name"
+      placeholder="e.g. Website Redesign"
+      [maxlength]="255"
+      formControlName="name"
+    />
+    <app-text-field
+      label="Project key"
+      [uppercase]="true"
+      [maxlength]="10"
+      [hint]="
+        editing
+          ? 'The key cannot be changed.'
+          : 'Prefix for issue IDs, such as WR-12. It cannot be changed later.'
+      "
+      formControlName="key"
+    />
+    <app-text-area
+      label="Description"
+      placeholder="What is this project about?"
+      [rows]="3"
+      formControlName="description"
+    />
+
+    <div class="form__row">
+      <app-text-field label="Start date" type="date" formControlName="start_date" />
+      <app-text-field label="End date" type="date" formControlName="end_date" />
+    </div>
+  </form>
+
+  <ng-container footer>
+    <button app-button type="button" variant="ghost" (click)="ref.close()">Cancel</button>
+    <button app-button type="submit" form="project-form" [loading]="submitting()">
+      {{ editing ? 'Save changes' : 'Create project' }}
+    </button>
+  </ng-container>
+</app-modal>

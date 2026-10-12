@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { applyServerErrors } from './server-errors';
-import { matchValues } from './validators';
+import { firstErrorMessage } from './error-messages';
+import { dateRange, matchValues } from './validators';
 
 const makeForm = () =>
   new FormGroup({
@@ -77,5 +78,39 @@ describe('matchValues', () => {
 
     form.controls.confirm.setValue('abc12345');
     expect(form.controls.confirm.errors).toBeNull();
+  });
+});
+
+describe('dateRange', () => {
+  const make = (start: string, end: string) =>
+    new FormGroup(
+      { start: new FormControl(start), end: new FormControl(end) },
+      { validators: dateRange('start', 'end') },
+    );
+
+  it('flags an end date before the start date', () => {
+    expect(make('2026-12-01', '2026-11-01').controls.end.errors).toEqual({ range: true });
+  });
+
+  it('accepts equal dates and ignores empty values', () => {
+    expect(make('2026-12-01', '2026-12-01').controls.end.errors).toBeNull();
+    expect(make('', '2026-12-01').controls.end.errors).toBeNull();
+    expect(make('2026-12-01', '').controls.end.errors).toBeNull();
+  });
+
+  it('clears the error once the dates are fixed and keeps other errors', () => {
+    const form = make('2026-12-01', '2026-11-01');
+    form.controls.end.setValue('2027-01-01');
+    expect(form.controls.end.errors).toBeNull();
+  });
+});
+
+describe('firstErrorMessage', () => {
+  it('prefers a custom message, then server errors', () => {
+    expect(firstErrorMessage({ message: 'Custom.' }, 'Field')).toBe('Custom.');
+    expect(firstErrorMessage({ server: 'Taken.' }, 'Field')).toBe('Taken.');
+    expect(firstErrorMessage({ range: true }, 'End date')).toBe(
+      'End date must be on or after the start date.',
+    );
   });
 });

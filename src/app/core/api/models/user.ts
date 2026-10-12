@@ -21,3 +21,15 @@ export interface ProfileUpdate {
   full_name?: string;
   email?: string;
 }
+
+/** What the user picker returns: enough to identify a person, never their email. */
+export interface UserSummary {
+  id: number;
+  username: string;
+  full_name: string;
+}
+
+/** Full name, falling back to the username for accounts that have none. */
+export function displayNameOf(person: { full_name: string; username: string }): string {
+  return person.full_name.trim() || person.username;
+}

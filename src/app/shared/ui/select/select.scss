@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-strong);
+}
+
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field__select {
+  width: 100%;
+  height: var(--control-height-lg);
+  padding: 0 calc(var(--space-3) + 16px + var(--space-2)) 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-strong);
+  font-size: var(--text-base);
+  appearance: none;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-neutral-400);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: var(--focus-ring);
+  }
+
+  &:disabled {
+    background: var(--color-neutral-100);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+}
+
+.field__select--sm {
+  height: var(--control-height-sm);
+  font-size: var(--text-sm);
+}
+
+.field__chevron {
+  position: absolute;
+  right: var(--space-3);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.field--invalid .field__select {
+  border-color: var(--color-danger-500);
+}
+
+.field__message {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.field__message--error {
+  color: var(--color-danger-600);
+}

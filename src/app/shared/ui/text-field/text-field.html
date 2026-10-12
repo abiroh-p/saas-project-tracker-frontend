@@ -10,16 +10,18 @@
       class="field__input"
       [class.field__input--with-icon]="icon()"
       [class.field__input--with-toggle]="type() === 'password'"
+      [class.field__input--uppercase]="uppercase()"
       [id]="id"
       [attr.type]="effectiveType()"
       [value]="value()"
       [placeholder]="placeholder()"
       [attr.autocomplete]="autocomplete()"
+      [attr.maxlength]="maxlength()"
       [disabled]="disabled()"
       [attr.aria-invalid]="errorMessage() ? true : null"
       [attr.aria-describedby]="describedBy()"
       (input)="handleInput($event)"
-      (blur)="handleBlur()"
+      (blur)="markTouched()"
     />
 
     @if (type() === 'password') {

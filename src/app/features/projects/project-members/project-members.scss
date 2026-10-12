@@ -1,0 +1,119 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+
+  h2 {
+    font-size: var(--text-md);
+  }
+}
+
+.table-wrap {
+  margin: 0 calc(var(--space-2) * -1);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  // Below this width the table scrolls inside its card instead of squeezing the name column.
+  min-width: 30rem;
+  border-collapse: collapse;
+
+  th {
+    padding: var(--space-2) var(--space-2);
+    border-bottom: 1px solid var(--border-default);
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: var(--space-3) var(--space-2);
+    border-bottom: 1px solid var(--color-neutral-100);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.person {
+  display: flex;
+  min-width: 12rem;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.person__text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+
+  strong {
+    color: var(--text-strong);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    overflow-wrap: anywhere;
+  }
+}
+
+.you {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.role-select {
+  min-width: 10rem;
+}
+
+.muted {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+// On phones keep the essentials visible without horizontal scrolling: drop the join date and the
+// email line, make remove icon-only (its aria-label still names the member) and narrow the select.
+@media (max-width: 40rem) {
+  .col-joined,
+  .person__text span:not(.you) {
+    display: none;
+  }
+
+  .table {
+    min-width: 0;
+  }
+
+  .person {
+    min-width: 0;
+  }
+
+  .role-select {
+    min-width: 9.5rem;
+  }
+
+  .action-label {
+    display: none;
+  }
+}

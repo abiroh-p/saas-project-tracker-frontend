@@ -1,0 +1,30 @@
+<div class="field" [class.field--invalid]="errorMessage()" [class.field--disabled]="disabled()">
+  <label class="field__label" [for]="id">{{ label() }}</label>
+
+  <textarea
+    class="field__input"
+    [id]="id"
+    [rows]="rows()"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [attr.maxlength]="maxlength()"
+    [disabled]="disabled()"
+    [attr.aria-invalid]="errorMessage() ? true : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="handleInput($event)"
+    (blur)="markTouched()"
+  ></textarea>
+
+  <div class="field__footer">
+    @if (errorMessage(); as message) {
+      <p class="field__message field__message--error" [id]="id + '-error'" role="alert">
+        {{ message }}
+      </p>
+    } @else if (hint(); as hintText) {
+      <p class="field__message" [id]="id + '-hint'">{{ hintText }}</p>
+    }
+    @if (maxlength(); as max) {
+      <p class="field__counter" aria-hidden="true">{{ value().length }}/{{ max }}</p>
+    }
+  </div>
+</div>
