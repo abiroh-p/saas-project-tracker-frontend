@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import type { Dashboard, DashboardIssue, IssueStatus } from '../../core/api/models';
@@ -15,12 +15,16 @@ import { ISSUE_STATUS_LABELS } from '../../core/api/models';
 })
 export class DashboardPage {
   private readonly service = inject(DashboardService);
-  private readonly resource = rxResource<Dashboard, undefined>({ params: () => undefined, stream: () => this.service.get() });
+  private readonly refreshKey = signal(0);
+  private readonly resource = rxResource<Dashboard, number>({
+    params: () => this.refreshKey(),
+    stream: () => this.service.get(),
+  });
   protected readonly data = computed(() => this.resource.hasValue() ? this.resource.value() : null);
   protected readonly error = computed(() => apiErrorOf(this.resource.error()));
   protected readonly loading = this.resource.isLoading;
   protected readonly statuses: IssueStatus[] = ['TODO', 'IN_PROGRESS', 'IN_REVIEW', 'DONE'];
   protected readonly labels = ISSUE_STATUS_LABELS;
-  protected retry(): void { this.resource.reload(); }
+  protected retry(): void { this.refreshKey.update((key) => key + 1); }
   protected issueLink(issue: DashboardIssue): string[] { return ['/issues', issue.id.toString()]; }
 }
