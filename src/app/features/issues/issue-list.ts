@@ -23,7 +23,10 @@ export class IssueList {
   protected readonly creatingProject = signal('');
   protected readonly createError = signal('');
   protected readonly creatingIssue = signal(false);
-  private readonly projectsResource = rxResource<Page<Project>, undefined>({ params: () => undefined, stream: () => this.projects.list(1, 100) });
+  private readonly projectsResource = rxResource<Page<Project>, object>({
+    params: () => ({}),
+    stream: () => this.projects.list(1, 100),
+  });
   protected readonly creatableProjects = computed(() => this.projectsResource.hasValue() ? this.projectsResource.value().results.filter((project) => project.my_role !== 'VIEWER') : []);
   protected readonly page = signal(1);
   protected readonly filters = signal<IssueFilters>({});

@@ -75,7 +75,7 @@ describe('ProjectDetail', () => {
     expect(el.textContent).toContain('WR');
     expect(el.textContent).toContain('Project Manager');
     const tabs = Array.from(el.querySelectorAll('.tab')).map((tab) => tab.textContent?.trim());
-    expect(tabs).toEqual(['Overview', 'Members']);
+    expect(tabs).toEqual(['Overview', 'Issues', 'Members', 'Activity', 'Reports']);
     expect(el.querySelector('.back')!.getAttribute('href')).toBe('/projects');
   });
 
