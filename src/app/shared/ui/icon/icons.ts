@@ -1,4 +1,7 @@
 import {
+  Archive,
+  ArrowLeft,
+  Calendar,
   Check,
   ChevronDown,
   CircleAlert,
@@ -13,8 +16,14 @@ import {
   LogOut,
   Mail,
   Menu,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
   TriangleAlert,
   User,
+  UserPlus,
+  Users,
   X,
 } from 'lucide';
 
@@ -23,6 +32,9 @@ import {
  * unused icons are tree-shaken out of the bundle.
  */
 export const ICONS = {
+  archive: Archive,
+  'arrow-left': ArrowLeft,
+  calendar: Calendar,
   check: Check,
   'chevron-down': ChevronDown,
   'circle-alert': CircleAlert,
@@ -37,8 +49,14 @@ export const ICONS = {
   'log-out': LogOut,
   mail: Mail,
   menu: Menu,
+  pencil: Pencil,
+  plus: Plus,
+  search: Search,
+  'trash-2': Trash2,
   'triangle-alert': TriangleAlert,
   user: User,
+  'user-plus': UserPlus,
+  users: Users,
   x: X,
 } as const;
 

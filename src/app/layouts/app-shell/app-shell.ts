@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } fro
 import { filter } from 'rxjs';
 import { Icon } from '../../shared/ui/icon/icon';
 import { Logo } from '../../shared/ui/logo/logo';
+import { ToastContainer } from '../../shared/ui/toast/toast-container';
 import { MAIN_NAV, SETTINGS_NAV } from './nav-items';
 import { UserMenu } from './user-menu';
 
@@ -13,7 +14,7 @@ import { UserMenu } from './user-menu';
  */
 @Component({
   selector: 'app-shell',
-  imports: [Icon, Logo, RouterLink, RouterLinkActive, RouterOutlet, UserMenu],
+  imports: [Icon, Logo, RouterLink, RouterLinkActive, RouterOutlet, ToastContainer, UserMenu],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(document:keydown.escape)': 'closeNav()' },
   templateUrl: './app-shell.html',

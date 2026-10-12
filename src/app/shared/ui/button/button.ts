@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger-outline';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'danger-outline';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /**
@@ -18,6 +18,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
     '[class.btn--primary]': "variant() === 'primary'",
     '[class.btn--secondary]': "variant() === 'secondary'",
     '[class.btn--ghost]': "variant() === 'ghost'",
+    '[class.btn--danger]': "variant() === 'danger'",
     '[class.btn--danger-outline]': "variant() === 'danger-outline'",
     '[class.btn--sm]': "size() === 'sm'",
     '[class.btn--lg]': "size() === 'lg'",

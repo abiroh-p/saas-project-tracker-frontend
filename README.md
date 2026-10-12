@@ -42,8 +42,9 @@ src/
       forms/             validation messages, server-error mapping, validators
       config/            API_BASE_URL injection token
     layouts/             page frames: app-shell (sidebar, top bar, account menu) for signed-in pages
-    shared/ui/           reusable presentational components (button, text-field, checkbox, alert, icon, logo,
-                         avatar, card, page-header)
+    shared/ui/           reusable presentational components (button, text-field, text-area, select, checkbox,
+                         alert, badge, icon, logo, avatar, card, page-header, pagination, empty-state,
+                         skeleton, dialog + confirm, toasts)
     features/            one folder per product area, lazy loaded (auth, profile, account, placeholder, ...)
 ```
 
@@ -67,6 +68,19 @@ Rules of thumb:
 All signed-in routes render inside `AppShell`. To add a page, add a child route under the shell in
 `app.routes.ts` and, if it belongs in the sidebar, an entry in `layouts/app-shell/nav-items.ts`.
 Below 1024px the sidebar becomes a drawer opened from the top bar.
+
+## Conventions worth knowing
+
+- **Loading data:** components use `rxResource`. Angular wraps non-`Error` values, so always read
+  errors through `apiErrorOf(resource.error())` (`core/http/resource-error.ts`), never with a cast.
+- **Dialogs:** open them with `DialogService` (focus trap, Escape, focus restore) and render an
+  `<app-modal>`; use `DialogService.confirm()` for destructive actions.
+- **Feedback:** `ToastService.success/error/info` for results of actions; inline `<app-alert>` for
+  form-level errors; field errors through `applyServerErrors()`.
+- **Form fields** extend `FieldBase` (`shared/ui/field`), which provides value access and the
+  touched-and-invalid error message.
+- **Specs for `rxResource` components:** use `settle(fixture)` from `src/app/testing/settle.ts`;
+  `fixture.whenStable()` waits for in-flight loads and would deadlock on mocked HTTP.
 
 ## Authentication flow
 

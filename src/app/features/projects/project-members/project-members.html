@@ -1,0 +1,99 @@
+@if (rows(); as list) {
+  <app-card class="card">
+    <div class="toolbar">
+      <h2>{{ list.length }} {{ list.length === 1 ? 'member' : 'members' }}</h2>
+      @if (canManage()) {
+        <button app-button type="button" size="sm" (click)="addMember(list)">
+          <app-icon name="user-plus" [size]="16" />
+          Add member
+        </button>
+      }
+    </div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Member</th>
+            <th scope="col">Role</th>
+            <th scope="col" class="col-joined">Joined</th>
+            <th scope="col"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of list; track row.member.id) {
+            <tr>
+              <td>
+                <div class="person">
+                  <app-avatar [name]="row.name" [size]="36" />
+                  <div class="person__text">
+                    <strong
+                      >{{ row.name }}
+                      @if (row.isSelf) {
+                        <span class="you"> (you)</span>
+                      }
+                    </strong>
+                    <span>{{ row.member.email }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                @if (canManage()) {
+                  <app-select
+                    class="role-select"
+                    size="sm"
+                    [hideLabel]="true"
+                    [label]="'Role for ' + row.name"
+                    [options]="roleOptions"
+                    [formControl]="row.roleControl"
+                    (selectionChange)="changeRole(row, $event)"
+                  />
+                } @else {
+                  <app-badge>{{ roleLabel(row.member.role) }}</app-badge>
+                }
+              </td>
+              <td class="muted col-joined">{{ row.member.created_at | date: 'mediumDate' }}</td>
+              <td class="actions">
+                @if (row.isSelf) {
+                  <button app-button type="button" size="sm" variant="ghost" (click)="remove(row)">
+                    Leave
+                  </button>
+                } @else if (canManage()) {
+                  <button
+                    app-button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    [attr.aria-label]="'Remove ' + row.name"
+                    (click)="remove(row)"
+                  >
+                    <app-icon name="trash-2" [size]="16" />
+                    <span class="action-label">Remove</span>
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </app-card>
+} @else if (error(); as problem) {
+  <app-empty-state
+    icon="circle-alert"
+    heading="Members could not be loaded"
+    [description]="problem.detail"
+  >
+    <button actions app-button type="button" variant="secondary" (click)="retry()">
+      Try again
+    </button>
+  </app-empty-state>
+} @else {
+  <app-card aria-busy="true" aria-label="Loading members">
+    <div class="loading">
+      <app-skeleton height="2.5rem" />
+      <app-skeleton height="2.5rem" />
+      <app-skeleton height="2.5rem" />
+    </div>
+  </app-card>
+}

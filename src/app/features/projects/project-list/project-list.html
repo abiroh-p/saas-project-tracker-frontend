@@ -1,0 +1,54 @@
+<app-page-header heading="Projects" subtitle="Plan and track work across your projects.">
+  <button actions app-button type="button" (click)="newProject()">
+    <app-icon name="plus" [size]="16" />
+    New project
+  </button>
+</app-page-header>
+
+@if (data(); as result) {
+  @if (result.count === 0) {
+    <app-empty-state
+      heading="No projects yet"
+      description="Create your first project to start planning and tracking work with your team."
+    >
+      <button actions app-button type="button" (click)="newProject()">
+        <app-icon name="plus" [size]="16" />
+        New project
+      </button>
+    </app-empty-state>
+  } @else {
+    <ul class="grid">
+      @for (project of result.results; track project.id) {
+        <li><app-project-card [project]="project" /></li>
+      }
+    </ul>
+
+    <app-pagination
+      [page]="page()"
+      [pageSize]="pageSize"
+      [count]="result.count"
+      (pageChange)="goToPage($event)"
+    />
+  }
+} @else if (error(); as problem) {
+  <app-empty-state
+    icon="circle-alert"
+    heading="Projects could not be loaded"
+    [description]="problem.detail"
+  >
+    <button actions app-button type="button" variant="secondary" (click)="retry()">
+      Try again
+    </button>
+  </app-empty-state>
+} @else {
+  <ul class="grid" aria-busy="true" aria-label="Loading projects">
+    @for (n of skeletons; track n) {
+      <li class="skeleton-card">
+        <app-skeleton width="30%" height="1.25rem" />
+        <app-skeleton width="70%" height="1.5rem" />
+        <app-skeleton height="2.5rem" />
+        <app-skeleton width="50%" height="1rem" />
+      </li>
+    }
+  </ul>
+}

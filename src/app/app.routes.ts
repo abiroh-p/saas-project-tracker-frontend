@@ -45,10 +45,40 @@ export const routes: Routes = [
       },
       {
         path: 'projects',
-        title: 'Projects · ProjectTracker',
-        data: { heading: 'Projects', description: 'Project management is coming next.' },
-        loadComponent: () =>
-          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            title: 'Projects · ProjectTracker',
+            loadComponent: () =>
+              import('./features/projects/project-list/project-list').then((m) => m.ProjectList),
+          },
+          {
+            // The page title is set once the project has loaded (see ProjectDetail).
+            path: ':projectId',
+            loadComponent: () =>
+              import('./features/projects/project-detail/project-detail').then(
+                (m) => m.ProjectDetail,
+              ),
+            children: [
+              { path: '', pathMatch: 'full', redirectTo: 'overview' },
+              {
+                path: 'overview',
+                loadComponent: () =>
+                  import('./features/projects/project-overview/project-overview').then(
+                    (m) => m.ProjectOverview,
+                  ),
+              },
+              {
+                path: 'members',
+                loadComponent: () =>
+                  import('./features/projects/project-members/project-members').then(
+                    (m) => m.ProjectMembers,
+                  ),
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'issues',

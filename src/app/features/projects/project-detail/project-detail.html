@@ -1,0 +1,64 @@
+@if (context.project(); as project) {
+  <a class="back" routerLink="/projects">
+    <app-icon name="arrow-left" [size]="16" />
+    Projects
+  </a>
+
+  <header class="header">
+    <div class="header__title">
+      <div class="header__badges">
+        <app-badge variant="primary">{{ project.key }}</app-badge>
+        @if (roleLabel(); as role) {
+          <app-badge>{{ role }}</app-badge>
+        }
+      </div>
+      <h1>{{ project.name }}</h1>
+    </div>
+
+    @if (context.canManage()) {
+      <div class="header__actions">
+        <button app-button type="button" variant="secondary" (click)="edit(project)">
+          <app-icon name="pencil" [size]="16" />
+          Edit
+        </button>
+        <button app-button type="button" variant="danger-outline" (click)="archive(project)">
+          <app-icon name="archive" [size]="16" />
+          Archive
+        </button>
+      </div>
+    }
+  </header>
+
+  <nav class="tabs" aria-label="Project sections">
+    <a class="tab" routerLink="overview" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+      Overview
+    </a>
+    <a class="tab" routerLink="members" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+      Members
+    </a>
+  </nav>
+
+  <router-outlet />
+} @else if (notFound()) {
+  <app-empty-state
+    icon="folder"
+    heading="Project not found"
+    description="It may have been archived, or you may not have access to it."
+  >
+    <a actions app-button routerLink="/projects">Back to projects</a>
+  </app-empty-state>
+} @else if (context.error(); as problem) {
+  <app-empty-state
+    icon="circle-alert"
+    heading="The project could not be loaded"
+    [description]="problem.detail"
+  >
+    <a actions app-button variant="secondary" routerLink="/projects">Back to projects</a>
+  </app-empty-state>
+} @else {
+  <div class="loading" aria-busy="true" aria-label="Loading project">
+    <app-skeleton width="8rem" height="1rem" />
+    <app-skeleton width="50%" height="2rem" />
+    <app-skeleton height="2.5rem" />
+  </div>
+}

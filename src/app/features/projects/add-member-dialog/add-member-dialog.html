@@ -1,0 +1,75 @@
+<app-modal heading="Add member" (closed)="ref.close()">
+  <div class="body">
+    @if (errorMessage(); as message) {
+      <app-alert variant="error">{{ message }}</app-alert>
+    }
+
+    @if (selected(); as user) {
+      <div class="selected">
+        <app-avatar [name]="nameOf(user)" [size]="36" />
+        <div class="selected__text">
+          <strong>{{ nameOf(user) }}</strong>
+          <span>{{ user.username }}</span>
+        </div>
+        <button type="button" class="link" (click)="clearSelection()">Change</button>
+      </div>
+
+      <app-select label="Role" [options]="roleOptions" [formControl]="role" />
+    } @else {
+      <app-text-field
+        label="Find people"
+        icon="search"
+        placeholder="Search by name or username"
+        autocomplete="off"
+        [formControl]="search"
+      />
+
+      <div class="results" aria-live="polite">
+        @if (tooShort()) {
+          <p class="results__note">Type at least 2 characters to search.</p>
+        } @else if (searching()) {
+          <p class="results__note">Searching…</p>
+        } @else if (searchError(); as problem) {
+          <p class="results__note results__note--error">{{ problem.detail }}</p>
+        } @else if (results().length === 0) {
+          <p class="results__note">No people found.</p>
+        } @else {
+          <ul class="results__list">
+            @for (result of results(); track result.user.id) {
+              <li>
+                <button
+                  type="button"
+                  class="person"
+                  [disabled]="result.alreadyMember"
+                  (click)="select(result.user)"
+                >
+                  <app-avatar [name]="result.name" [size]="32" />
+                  <span class="person__text">
+                    <strong>{{ result.name }}</strong>
+                    <span>{{ result.user.username }}</span>
+                  </span>
+                  @if (result.alreadyMember) {
+                    <span class="person__tag">Already a member</span>
+                  }
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </div>
+
+  <ng-container footer>
+    <button app-button type="button" variant="ghost" (click)="ref.close()">Cancel</button>
+    <button
+      app-button
+      type="button"
+      [disabled]="!selected()"
+      [loading]="submitting()"
+      (click)="submit()"
+    >
+      Add member
+    </button>
+  </ng-container>
+</app-modal>

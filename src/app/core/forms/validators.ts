@@ -19,3 +19,25 @@ export function matchValues(key: string, confirmKey: string): ValidatorFn {
     return null;
   };
 }
+
+/**
+ * Group validator for date pairs (`YYYY-MM-DD` strings): marks `endKey` with `{ range: true }` when
+ * it is earlier than `startKey`. Empty values are ignored.
+ */
+export function dateRange(startKey: string, endKey: string): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const endControl = group.get(endKey);
+    if (!endControl) {
+      return null;
+    }
+
+    const start = group.get(startKey)?.value as string | null;
+    const end = endControl.value as string | null;
+    const invalid = !!start && !!end && end < start;
+
+    const { range: _removed, ...rest } = endControl.errors ?? {};
+    const next = invalid ? { ...rest, range: true } : rest;
+    endControl.setErrors(Object.keys(next).length > 0 ? next : null);
+    return null;
+  };
+}

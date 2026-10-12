@@ -69,6 +69,16 @@
   padding-right: calc(var(--space-3) + 18px + var(--space-3));
 }
 
+.field__input--uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  &::placeholder {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}
+
 .field--invalid .field__input {
   border-color: var(--color-danger-500);
 

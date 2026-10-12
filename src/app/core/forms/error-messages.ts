@@ -9,6 +9,9 @@ export function firstErrorMessage(errors: ValidationErrors | null, label: string
   if (typeof errors['server'] === 'string') {
     return errors['server'];
   }
+  if (typeof errors['message'] === 'string') {
+    return errors['message'];
+  }
   if (errors['required']) {
     return `${label} is required.`;
   }
@@ -23,6 +26,9 @@ export function firstErrorMessage(errors: ValidationErrors | null, label: string
   }
   if (errors['mismatch']) {
     return 'Passwords do not match.';
+  }
+  if (errors['range']) {
+    return 'End date must be on or after the start date.';
   }
   if (errors['pattern']) {
     return `${label} has an invalid format.`;
