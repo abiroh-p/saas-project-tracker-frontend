@@ -36,12 +36,8 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         title: 'Dashboard · ProjectTracker',
-        data: {
-          heading: 'Dashboard',
-          description: 'Your projects and issues at a glance will appear here soon.',
-        },
         loadComponent: () =>
-          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+          import('./features/dashboard/dashboard').then((m) => m.DashboardPage),
       },
       {
         path: 'projects',
@@ -76,6 +72,18 @@ export const routes: Routes = [
                     (m) => m.ProjectMembers,
                   ),
               },
+              {
+                path: 'issues',
+                loadComponent: () => import('./features/projects/project-issues').then((m) => m.ProjectIssues),
+              },
+              {
+                path: 'activity',
+                loadComponent: () => import('./features/activity/project-activity').then((m) => m.ProjectActivity),
+              },
+              {
+                path: 'reports',
+                loadComponent: () => import('./features/reports/project-reports').then((m) => m.ProjectReports),
+              },
             ],
           },
         ],
@@ -83,9 +91,10 @@ export const routes: Routes = [
       {
         path: 'issues',
         title: 'Issues · ProjectTracker',
-        data: { heading: 'Issues', description: 'Issue tracking is coming soon.' },
-        loadComponent: () =>
-          import('./features/placeholder/page-placeholder').then((m) => m.PagePlaceholder),
+        children: [
+          { path: '', pathMatch: 'full', loadComponent: () => import('./features/issues/issue-list').then((m) => m.IssueList) },
+          { path: ':issueId', loadComponent: () => import('./features/issues/issue-detail').then((m) => m.IssueDetail) },
+        ],
       },
       {
         path: 'settings',

@@ -1,0 +1,27 @@
+<app-page-header heading="Issues" subtitle="Search and track work across your projects.">
+  <button actions app-button type="button" (click)="creating.set(!creating())">{{ creating() ? 'Cancel' : 'Create issue' }}</button>
+</app-page-header>
+@if (creating()) { <form class="create-form" (submit)="createIssue($event)"><label>Project<select required [value]="creatingProject()" (change)="creatingProject.set($any($event.target).value)"><option value="">Choose a project</option>@for (project of creatableProjects(); track project.id) { <option [value]="project.id">{{ project.key }} · {{ project.name }}</option> }</select></label><label>Title<input required maxlength="255" [value]="creatingTitle()" (input)="creatingTitle.set($any($event.target).value)" /></label>@if (createError()) { <p role="alert">{{ createError() }}</p> }<button app-button type="submit" [disabled]="creatingIssue()">{{ creatingIssue() ? 'Creating…' : 'Create issue' }}</button></form> }
+<form class="filters" (submit)="apply($event)">
+  <label>Search<input type="search" [value]="search()" (input)="search.set($any($event.target).value)" placeholder="Title, description, or key" /></label>
+  <label>Status<select [value]="status()" (change)="status.set($any($event.target).value)"><option value="">Any status</option>@for (item of statuses; track item) { <option [value]="item">{{ statusLabels[item] }}</option> }</select></label>
+  <label>Priority<select [value]="priority()" (change)="priority.set($any($event.target).value)"><option value="">Any priority</option>@for (item of priorities; track item) { <option [value]="item">{{ priorityLabels[item] }}</option> }</select></label>
+  <label>Type<select [value]="issueType()" (change)="issueType.set($any($event.target).value)"><option value="">Any type</option>@for (item of types; track item) { <option [value]="item">{{ item }}</option> }</select></label>
+  <label>Assignee<input [value]="assignee()" (input)="assignee.set($any($event.target).value)" placeholder="User ID, me, or unassigned" /></label>
+  <label>Project ID<input inputmode="numeric" [value]="project()" (input)="project.set($any($event.target).value)" placeholder="Any project" /></label>
+  <label>Due after<input type="date" [value]="dueAfter()" (input)="dueAfter.set($any($event.target).value)" /></label>
+  <label>Due before<input type="date" [value]="dueBefore()" (input)="dueBefore.set($any($event.target).value)" /></label>
+  <label>Order<select [value]="ordering()" (change)="ordering.set($any($event.target).value)"><option value="">Newest first</option><option value="updated_at">Recently updated</option><option value="-updated_at">Least recently updated</option><option value="due_date">Due date</option><option value="priority">Priority</option><option value="title">Title</option></select></label>
+  <div class="actions"><button type="submit">Apply filters</button><button type="button" (click)="clear()">Clear</button></div>
+</form>
+@if (data(); as result) {
+  @if (!result.results.length) {
+    <app-empty-state heading="{{ active() ? 'No matching issues' : 'No issues yet' }}" [description]="active() ? 'Try changing or clearing your filters.' : 'Issues from your projects will appear here.'" />
+  } @else {
+    <div class="table-wrap"><table><thead><tr><th>Issue</th><th>Project</th><th>Status</th><th>Priority</th><th>Assignee</th><th>Due date</th></tr></thead><tbody>
+      @for (issue of result.results; track issue.id) { <tr><td><a [routerLink]="[issue.id]"><strong>{{ issue.issue_key }}</strong> {{ issue.title }}</a></td><td><a [routerLink]="['/projects', issue.project]">{{ issue.project }}</a></td><td>{{ statusLabels[issue.status] }}</td><td>{{ priorityLabels[issue.priority] }}</td><td>{{ issue.assignee_detail?.full_name || issue.assignee_detail?.username || 'Unassigned' }}</td><td>{{ issue.due_date || '—' }}</td></tr> }
+    </tbody></table></div>
+    <app-pagination [page]="page()" [pageSize]="20" [count]="result.count" (pageChange)="goToPage($event)" />
+  }
+} @else if (error(); as problem) { <app-empty-state icon="circle-alert" heading="Issues could not be loaded" [description]="problem.detail"><button actions type="button" (click)="retry()">Try again</button></app-empty-state>
+} @else { <div aria-busy="true"><app-skeleton height="3rem" /><app-skeleton height="15rem" /></div> }

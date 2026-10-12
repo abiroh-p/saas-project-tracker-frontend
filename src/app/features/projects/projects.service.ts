@@ -10,9 +10,9 @@ export class ProjectsService {
   private readonly baseUrl = `${inject(API_BASE_URL)}/projects`;
 
   /** Projects the signed-in user is a member of, newest first. */
-  list(page: number, pageSize: number): Observable<Page<Project>> {
+  list(page: number, pageSize: number, search = ''): Observable<Page<Project>> {
     return this.http.get<Page<Project>>(`${this.baseUrl}/`, {
-      params: { page, page_size: pageSize },
+      params: search ? { page, page_size: pageSize, search } : { page, page_size: pageSize },
     });
   }
 

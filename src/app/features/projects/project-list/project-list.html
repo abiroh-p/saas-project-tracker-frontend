@@ -5,11 +5,17 @@
   </button>
 </app-page-header>
 
+<form class="search" (submit)="applySearch($event)">
+  <label for="project-search">Search projects</label>
+  <input id="project-search" type="search" [value]="searchInput()" (input)="searchInput.set($any($event.target).value)" placeholder="Name or key" />
+  <button app-button type="submit" variant="secondary">Search</button>
+</form>
+
 @if (data(); as result) {
   @if (result.count === 0) {
     <app-empty-state
-      heading="No projects yet"
-      description="Create your first project to start planning and tracking work with your team."
+      [heading]="search() ? 'No matching projects' : 'No projects yet'"
+      [description]="search() ? 'Try another search term.' : 'Create your first project to start planning and tracking work with your team.'"
     >
       <button actions app-button type="button" (click)="newProject()">
         <app-icon name="plus" [size]="16" />

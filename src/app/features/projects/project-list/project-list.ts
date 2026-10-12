@@ -39,10 +39,12 @@ export class ProjectList {
 
   protected readonly pageSize = PROJECTS_PAGE_SIZE;
   protected readonly page = signal(1);
+  protected readonly searchInput = signal('');
+  protected readonly search = signal('');
 
-  private readonly resource = rxResource<Page<Project>, number>({
-    params: () => this.page(),
-    stream: ({ params: page }) => this.projects.list(page, this.pageSize),
+  private readonly resource = rxResource<Page<Project>, { page: number; search: string }>({
+    params: () => ({ page: this.page(), search: this.search() }),
+    stream: ({ params }) => this.projects.list(params.page, this.pageSize, params.search),
   });
 
   protected readonly error = computed(() => apiErrorOf(this.resource.error()));
@@ -62,6 +64,12 @@ export class ProjectList {
 
   protected goToPage(page: number): void {
     this.page.set(page);
+  }
+
+  protected applySearch(event: Event): void {
+    event.preventDefault();
+    this.search.set(this.searchInput().trim());
+    this.page.set(1);
   }
 
   protected retry(): void {

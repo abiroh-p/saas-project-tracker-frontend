@@ -1,0 +1,35 @@
+<app-page-header heading="Dashboard" subtitle="Your projects and assigned work at a glance." />
+
+@if (data(); as dashboard) {
+  <section class="metrics" aria-label="Work summary">
+    <article><span>Projects</span><strong>{{ dashboard.summary.projects_count }}</strong></article>
+    <article><span>Assigned issues</span><strong>{{ dashboard.summary.assigned_issues_count }}</strong></article>
+    <article><span>In progress</span><strong>{{ dashboard.summary.in_progress_count }}</strong></article>
+    <article><span>Completed</span><strong>{{ dashboard.summary.completed_count }}</strong></article>
+    <article><span>Overdue</span><strong>{{ dashboard.summary.overdue_count }}</strong></article>
+  </section>
+
+  <section class="status" aria-labelledby="status-heading">
+    <h2 id="status-heading">Issues by status</h2>
+    <div class="status__grid">@for (status of statuses; track status) {
+      <article><span>{{ labels[status] }}</span><strong>{{ dashboard.issues_by_status[status] }}</strong></article>
+    }</div>
+  </section>
+
+  <section class="recent" aria-labelledby="recent-heading">
+    <h2 id="recent-heading">Recently updated assigned issues</h2>
+    @if (dashboard.recent_issues.length) {
+      <ul>@for (issue of dashboard.recent_issues; track issue.id) {
+        <li><a [routerLink]="issueLink(issue)"><strong>{{ issue.issue_key }}</strong> {{ issue.title }}</a><span>{{ labels[issue.status] }}</span></li>
+      }</ul>
+    } @else {
+      <app-empty-state heading="No assigned issues yet" description="Issues assigned to you will appear here." />
+    }
+  </section>
+} @else if (error(); as problem) {
+  <app-empty-state icon="circle-alert" heading="Dashboard could not be loaded" [description]="problem.detail">
+    <button actions type="button" (click)="retry()">Try again</button>
+  </app-empty-state>
+} @else {
+  <div class="metrics" aria-busy="true" aria-label="Loading dashboard">@for (n of [1,2,3,4,5]; track n) { <app-skeleton height="5rem" /> }</div>
+}
